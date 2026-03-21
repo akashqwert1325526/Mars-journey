@@ -362,11 +362,6 @@ body.mission-locked { overflow: hidden; }
   color: var(--cream);
 }
 
-#mi-copy {
-  margin-top: .7rem;
-  color: var(--dust);
-  font-size: 1rem;
-}
 
 #start-mission-btn {
   margin-top: 1.2rem;
@@ -426,3 +421,4 @@ body.mission-locked { overflow: hidden; }
 @media (max-width: 980px) {
   #mission-hud { left: 1rem; right: 1rem; top: auto; bottom: 5.5rem; width: auto; }
 }
+
