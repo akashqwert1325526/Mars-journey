@@ -1,20 +1,22 @@
-/* ══════════════════════════════════════
-   SCROLL — master controller
+/*
+   SCROLL - master controller
    Drives: progress, act detection,
    emotion sidebar, audio crossfade,
-   red tint, reveal animations
-══════════════════════════════════════ */
+   red tint, reveal animations, mission HUD
+*/
 
-const ACTS = ['act1','act2','act3','act4','act5','act6'];
+const ACTS = ['act1', 'act2', 'act3', 'act4', 'act5', 'act6'];
 
 const EMOTIONS = [
   { name: 'Attachment', color: '#4fa3e0' },
-  { name: 'Isolation',  color: '#9988cc' },
-  { name: 'Awe',        color: '#e8a050' },
-  { name: 'Terror',     color: '#e84040' },
-  { name: 'Wonder',     color: '#3ddc84' },
-  { name: 'Rebirth',    color: '#c1440e' },
+  { name: 'Isolation', color: '#9988cc' },
+  { name: 'Awe', color: '#e8a050' },
+  { name: 'Terror', color: '#e84040' },
+  { name: 'Wonder', color: '#3ddc84' },
+  { name: 'Rebirth', color: '#c1440e' },
 ];
+
+const STAGES = ['Launch', 'Travel', 'Approach', 'Landing', 'Explore', 'Transform'];
 
 const AUDIO_FNS = [
   () => Audio.playHeartbeat(64),
@@ -25,51 +27,63 @@ const AUDIO_FNS = [
   Audio.playTransformation,
 ];
 
-const actEls = ACTS.map(id => document.getElementById(id));
-const dots   = document.querySelectorAll('.s-dot');
+const actEls = ACTS.map((id) => document.getElementById(id));
+const dots = document.querySelectorAll('.s-dot');
+
+const stageNameEl = document.getElementById('mh-stage-name');
+const stageIndexEl = document.getElementById('mh-stage-index');
+const stageFillEl = document.getElementById('mh-stage-fill');
 
 let currentAct = 0;
 
 /* Exposed for audio.js sound button */
 window.getCurrentAct = () => currentAct;
 
+function updateMissionHud(act, pct) {
+  if (stageNameEl) stageNameEl.textContent = STAGES[act] || 'Launch';
+  if (stageIndexEl) stageIndexEl.textContent = (act + 1) + '/6';
+  if (stageFillEl) stageFillEl.style.width = Math.max(16.6, pct * 100) + '%';
+}
+
 function onScroll() {
-  const sy    = window.scrollY;
+  const sy = window.scrollY;
   const total = document.body.scrollHeight - innerHeight;
-  const pct   = Math.max(0, Math.min(1, sy / total));
+  const pct = Math.max(0, Math.min(1, sy / total));
 
   /* Progress bar */
   document.getElementById('progress').style.width = (pct * 100) + '%';
 
   /* Mars red tint */
-  const mr = Math.max(0, Math.min(1, (pct - .2) * 2.8));
+  const mr = Math.max(0, Math.min(1, (pct - 0.2) * 2.8));
   window.setMR(mr);
-  document.getElementById('red-wash').style.background  = `rgba(160,8,0,${mr * .45})`;
-  document.getElementById('scanlines').style.opacity    = String(mr * .45);
+  document.getElementById('red-wash').style.background = `rgba(160,8,0,${mr * 0.45})`;
+  document.getElementById('scanlines').style.opacity = String(mr * 0.45);
 
   /* Active act detection */
   let newAct = 0;
   actEls.forEach((el, i) => {
     if (!el) return;
     const r = el.getBoundingClientRect();
-    if (r.top <= innerHeight * .5 && r.bottom >= innerHeight * .5) newAct = i;
+    if (r.top <= innerHeight * 0.5 && r.bottom >= innerHeight * 0.5) newAct = i;
   });
+
+  updateMissionHud(newAct, pct);
 
   if (newAct !== currentAct) {
     currentAct = newAct;
 
     /* Emotion sidebar */
     const em = EMOTIONS[newAct];
-    document.getElementById('emo-name').textContent  = em.name;
-    document.getElementById('emo-name').style.color  = em.color;
+    document.getElementById('emo-name').textContent = em.name;
+    document.getElementById('emo-name').style.color = em.color;
     document.getElementById('emo-fill').style.height = ((newAct + 1) / 6 * 100) + '%';
     document.getElementById('emo-fill').style.background = em.color;
 
     /* Cursor tint */
-    const cur  = document.getElementById('cur');
+    const cur = document.getElementById('cur');
     const ring = document.getElementById('cur-ring');
-    cur.style.background      = em.color;
-    ring.style.borderColor    = em.color + '55';
+    cur.style.background = em.color;
+    ring.style.borderColor = em.color + '55';
 
     /* Scroll dots */
     dots.forEach((d, i) => d.classList.toggle('on', i === newAct));
@@ -79,20 +93,21 @@ function onScroll() {
 
     /* Act-specific side effects */
     if (newAct === 1) window.startDistIfNeeded();
+    if (newAct === 3 && window.startLandingCountdownIfNeeded) window.startLandingCountdownIfNeeded();
     if (newAct === 5) window.runFinaleIfNeeded();
   }
 
   /* Reveal on scroll */
-  document.querySelectorAll('.reveal, .reveal-l, .reveal-r').forEach(el => {
+  document.querySelectorAll('.reveal, .reveal-l, .reveal-r').forEach((el) => {
     const r = el.getBoundingClientRect();
-    if (r.top < innerHeight * .9) el.classList.add('visible');
+    if (r.top < innerHeight * 0.9) el.classList.add('visible');
   });
 }
 
 addEventListener('scroll', onScroll, { passive: true });
 
 /* Scroll dot clicks */
-dots.forEach(d => {
+dots.forEach((d) => {
   d.addEventListener('click', () => {
     document.getElementById(d.dataset.act)?.scrollIntoView({ behavior: 'smooth' });
   });

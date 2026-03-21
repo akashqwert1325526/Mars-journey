@@ -81,6 +81,22 @@
   </div>
   ▷ SOUND
 </button>
+<!-- MISSION INTRO -->
+<div id="mission-intro">
+  <div id="mi-card">
+    <div id="mi-kicker">Mission Omega</div>
+    <h2 id="mi-title">Mars Survival Simulation</h2>
+    <p id="mi-copy">Start, launch, survive landing, and make your first-night decisions on Mars.</p>
+    <button id="start-mission-btn">Start Mission</button>
+  </div>
+</div>
+
+<!-- MISSION HUD -->
+<div id="mission-hud">
+  <div class="mh-row"><span>STAGE</span><strong id="mh-stage-name">Launch</strong><span id="mh-stage-index">1/6</span></div>
+  <div id="mh-stage-track"><div id="mh-stage-fill" style="width:16.6%"></div></div>
+  <div class="mh-row"><span>OXYGEN</span><strong id="mh-oxy">100%</strong><span id="mh-status">Nominal</span></div>
+</div>
  
 <!-- ═══════════════════════════════════════
      ACT 1 — LAUNCH
@@ -211,6 +227,10 @@
  
     <div id="land-display" class="reveal">ENTERING ATMOSPHERE</div>
     <div id="land-sub" class="reveal">heat shield active · 19,000 km/h · 12 min from any help</div>
+    <div id="landing-timer-wrap" class="reveal">
+      <span>Landing Window</span>
+      <strong id="landing-timer">07:00</strong>
+    </div>
  
     <div id="systems" class="reveal">
       <div class="sys-row"><div class="sys-dot crit" id="d0"></div><span>HEAT SHIELD</span><span class="sys-val" id="v0" style="color:#ff3333">CRITICAL</span></div>
@@ -271,6 +291,15 @@
       <div id="disc-hint">↑ click the hotspots to discover Mars</div>
       <div id="disc-title"></div>
       <div id="disc-text"></div>
+    </div>
+    <div id="choice-panel" class="reveal">
+      <div id="choice-title">Survival Decision</div>
+      <div class="choice-actions">
+        <button class="choice-btn" data-choice="shelter">Build Shelter</button>
+        <button class="choice-btn" data-choice="scan">Scan Terrain</button>
+        <button class="choice-btn" data-choice="harvest">Harvest Ice</button>
+      </div>
+      <div id="choice-outcome">Pick a strategy to secure your first night on Mars.</div>
     </div>
  
     <div class="explore-grid reveal">
@@ -333,3 +362,4 @@
 <script src="js/cinematic.js"></script>
 </body>
 </html>
+

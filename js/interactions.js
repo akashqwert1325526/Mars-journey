@@ -351,3 +351,110 @@ function runFinale() {
 window.runFinaleIfNeeded = () => {
   if (!finaleStarted) runFinale();
 };
+/* MISSION FLOW UPGRADE */
+let oxygenLevel = 100;
+let landingCountdownStarted = false;
+let landingTimerId = null;
+let landingSeconds = 7 * 60;
+
+const OXY_COPY = {
+  shelter: { delta: -8, text: 'Shelter online. Radiation risk down, but energy use increased.' },
+  scan: { delta: -14, text: 'Terrain scan complete. You mapped hazards, but burned extra oxygen.' },
+  harvest: { delta: 6, text: 'Ice extraction successful. Oxygen reserves recovered.' },
+};
+
+function setOxygen(next) {
+  oxygenLevel = Math.max(0, Math.min(100, next));
+  const oxy = document.getElementById('mh-oxy');
+  const status = document.getElementById('mh-status');
+  if (oxy) oxy.textContent = oxygenLevel + '%';
+  if (status) {
+    if (oxygenLevel >= 70) {
+      status.textContent = 'Nominal';
+      status.style.color = 'var(--green)';
+    } else if (oxygenLevel >= 35) {
+      status.textContent = 'Watch';
+      status.style.color = 'var(--amber)';
+    } else {
+      status.textContent = 'Critical';
+      status.style.color = '#ff5555';
+    }
+  }
+}
+
+function renderLandingTimer() {
+  const el = document.getElementById('landing-timer');
+  if (!el) return;
+  const mm = String(Math.floor(landingSeconds / 60)).padStart(2, '0');
+  const ss = String(landingSeconds % 60).padStart(2, '0');
+  el.textContent = mm + ':' + ss;
+}
+
+window.startLandingCountdownIfNeeded = () => {
+  if (landingCountdownStarted) return;
+  landingCountdownStarted = true;
+  renderLandingTimer();
+  const landSub = document.getElementById('land-sub');
+
+  // Accelerated countdown for demo impact.
+  landingTimerId = setInterval(() => {
+    if (landingSeconds > 0) landingSeconds -= 1;
+    renderLandingTimer();
+    if (landingSeconds <= 0) {
+      clearInterval(landingTimerId);
+      landingTimerId = null;
+      const timer = document.getElementById('landing-timer');
+      if (timer) {
+        timer.textContent = '00:00';
+        timer.style.color = '#ff5555';
+      }
+      if (landSub) {
+        landSub.textContent = 'Landing window exceeded. Stabilize immediately.';
+        landSub.style.color = '#ff5555';
+      }
+    }
+  }, 250);
+};
+
+const stabBtnExtra = document.getElementById('stab-btn');
+if (stabBtnExtra) {
+  stabBtnExtra.addEventListener('click', () => {
+    if (landingTimerId) {
+      clearInterval(landingTimerId);
+      landingTimerId = null;
+    }
+    const timer = document.getElementById('landing-timer');
+    if (timer) {
+      timer.textContent = 'SAFE';
+      timer.style.color = 'var(--green)';
+    }
+  });
+}
+
+const intro = document.getElementById('mission-intro');
+const startMissionBtn = document.getElementById('start-mission-btn');
+if (intro && startMissionBtn) {
+  document.body.classList.add('mission-locked');
+  startMissionBtn.addEventListener('click', () => {
+    intro.classList.add('hide');
+    document.body.classList.remove('mission-locked');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+document.querySelectorAll('.choice-btn').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const key = btn.dataset.choice;
+    const cfg = OXY_COPY[key];
+    if (!cfg) return;
+
+    document.querySelectorAll('.choice-btn').forEach((b) => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    setOxygen(oxygenLevel + cfg.delta);
+    const out = document.getElementById('choice-outcome');
+    if (out) out.textContent = cfg.text;
+  });
+});
+
+setOxygen(100);
