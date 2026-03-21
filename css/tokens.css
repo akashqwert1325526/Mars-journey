@@ -1,0 +1,172 @@
+/* ══════════════════════════════════════
+   TOKENS — colors, fonts, base resets
+══════════════════════════════════════ */
+ 
+*,*::before,*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+ 
+:root {
+  --black:  #030305;
+  --mars:   #c1440e;
+  --ember:  #e8621a;
+  --amber:  #f0a500;
+  --dust:   #d4916a;
+  --cream:  #e8e0d0;
+  --muted:  #7a7060;
+  --blue:   #4fa3e0;
+  --green:  #3ddc84;
+  --fd: 'Bebas Neue', sans-serif;
+  --fb: 'Crimson Pro', serif;
+  --fm: 'Share Tech Mono', monospace;
+}
+ 
+html {
+  scroll-behavior: smooth;
+}
+ 
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: var(--fb);
+  overflow-x: hidden;
+  cursor: none;
+}
+ 
+/* ── SHARED TYPE ── */
+.act-tag {
+  font-family: var(--fm);
+  font-size: .62rem;
+  letter-spacing: .32em;
+  color: var(--ember);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .8rem;
+  margin-bottom: 1rem;
+}
+.act-tag::before,
+.act-tag::after {
+  content: '';
+  width: 26px;
+  height: 1px;
+  background: var(--ember);
+}
+ 
+.act-h {
+  font-family: var(--fd);
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  line-height: .9;
+  margin-bottom: 1.2rem;
+}
+ 
+.act-q {
+  font-family: var(--fb);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--cream);
+  margin-bottom: 1rem;
+}
+ 
+.act-sub {
+  font-family: var(--fm);
+  font-size: .64rem;
+  letter-spacing: .18em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+ 
+.grad-title {
+  background: linear-gradient(155deg, #e8e0d0 15%, #d4916a 52%, #e8621a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+ 
+/* ── BUTTONS ── */
+.cta-btn {
+  display: inline-block;
+  padding: 1rem 3.2rem;
+  font-family: var(--fd);
+  font-size: 1.25rem;
+  letter-spacing: .22em;
+  border: 1px solid var(--ember);
+  background: transparent;
+  color: var(--ember);
+  cursor: none;
+  position: relative;
+  overflow: hidden;
+  transition: color .4s;
+  margin-top: 1.5rem;
+}
+.cta-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--ember);
+  transform: translateX(-101%);
+  transition: transform .45s cubic-bezier(.7,0,.3,1);
+}
+.cta-btn:hover { color: var(--black); }
+.cta-btn:hover::before { transform: translateX(0); }
+.cta-btn span { position: relative; z-index: 1; }
+ 
+.amber-btn { border-color: var(--amber); color: var(--amber); }
+.amber-btn::before { background: var(--amber); }
+ 
+/* ── REVEAL ANIMATIONS ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity .9s ease, transform .9s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+ 
+.reveal-l {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity .9s, transform .9s;
+}
+.reveal-l.visible { opacity: 1; transform: translateX(0); }
+ 
+.reveal-r {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity .9s, transform .9s;
+}
+.reveal-r.visible { opacity: 1; transform: translateX(0); }
+ 
+/* ── KEYFRAMES ── */
+@keyframes blink {
+  0%, 100% { opacity: 1 }
+  50% { opacity: 0 }
+}
+ 
+@keyframes grain {
+  0%   { background-position: 0 0 }
+  25%  { background-position: -5% -10% }
+  50%  { background-position: -15% 5% }
+  75%  { background-position: 8% 0 }
+  100% { background-position: 0 0 }
+}
+ 
+@keyframes shake {
+  0%,100% { transform: translate(0,0) }
+  8%  { transform: translate(-9px, 6px) }
+  16% { transform: translate(10px,-7px) }
+  24% { transform: translate(-8px, 9px) }
+  32% { transform: translate(11px,-6px) }
+  40% { transform: translate(-9px, 8px) }
+  48% { transform: translate(8px, -9px) }
+  56% { transform: translate(-6px, 7px) }
+  64% { transform: translate(9px, -5px) }
+  72% { transform: translate(-5px, 6px) }
+  80% { transform: translate(7px, -4px) }
+  90% { transform: translate(-3px, 3px) }
+}
+ 

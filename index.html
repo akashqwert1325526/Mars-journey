@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MARS — A Human Story</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/tokens.css"/>
+<link rel="stylesheet" href="css/chrome.css"/>
+<link rel="stylesheet" href="css/acts.css"/>
+<link rel="stylesheet" href="css/cinematic.css"/>
+</head>
+<body>
+ 
+<!-- CURSOR -->
+<div id="cur"></div>
+<div id="cur-ring"></div>
+ 
+<!-- LETTERBOX BARS -->
+<div id="lb-top"></div>
+<div id="lb-bot"></div>
+ 
+<!-- ACT TITLE CARD -->
+<div id="title-card">
+  <div id="tc-bg"></div>
+  <div id="tc-act"></div>
+  <div id="tc-title"></div>
+  <div id="tc-line"></div>
+</div>
+ 
+<!-- VELOCITY BAR -->
+<div id="vel-bar"></div>
+ 
+<!-- FIXED OVERLAYS -->
+<canvas id="stars"></canvas>
+<div id="grain"></div>
+<div id="vignette"></div>
+<div id="red-wash"></div>
+<div id="scanlines"></div>
+<div id="flash"></div>
+<div id="progress"></div>
+ 
+<!-- NAV -->
+<nav>
+  <div id="nav-logo"></div>
+  <ul id="nav-links">
+    <li><a href="#act1">LAUNCH</a></li>
+    <li><a href="#act2">SPACE</a></li>
+    <li><a href="#act3">MARS</a></li>
+    <li><a href="#act4">LANDING</a></li>
+    <li><a href="#act5">EXPLORE</a></li>
+    <li><a href="#act6">TRANSFORM</a></li>
+  </ul>
+  <div id="nav-badge">MISSION Ω · 2026</div>
+</nav>
+ 
+<!-- SCROLL DOTS -->
+<div id="scroll-dots">
+  <div class="s-dot on" data-act="act1"></div>
+  <div class="s-dot" data-act="act2"></div>
+  <div class="s-dot" data-act="act3"></div>
+  <div class="s-dot" data-act="act4"></div>
+  <div class="s-dot" data-act="act5"></div>
+  <div class="s-dot" data-act="act6"></div>
+</div>
+ 
+<!-- EMOTION SIDEBAR -->
+<div id="emo-side">
+  <div class="emo-feel">feeling</div>
+  <div id="emo-name">Attachment</div>
+  <div id="emo-track"><div id="emo-fill" style="height:16%"></div></div>
+</div>
+ 
+<!-- SOUND BTN -->
+<button id="snd-btn">
+  <div id="snd-viz">
+    <div class="sv-bar"></div>
+    <div class="sv-bar"></div>
+    <div class="sv-bar"></div>
+    <div class="sv-bar"></div>
+  </div>
+  ▷ SOUND
+</button>
+ 
+<!-- ═══════════════════════════════════════
+     ACT 1 — LAUNCH
+════════════════════════════════════════ -->
+<section class="act" id="act1">
+  <div class="earth-glow"></div>
+  <div class="sweep-line"></div>
+  <div class="frame-corner tl"></div><div class="frame-corner tr"></div>
+  <div class="frame-corner bl"></div><div class="frame-corner br"></div>
+  <div class="act-inner">
+    <div class="act-tag reveal">Act I · The Departure</div>
+    <h1 class="act-h grad-title glitch reveal" data-text="LEAVING">LEAVING<br>
+      <span style="font-size:.38em;font-family:'Crimson Pro',serif;font-style:italic;-webkit-text-fill-color:var(--dust);color:var(--dust);letter-spacing:.05em">&nbsp;&nbsp;who you were</span>
+    </h1>
+    <p class="act-q reveal">"This is not just a mission…<br>it's a departure."</p>
+    <p class="act-sub reveal">You are leaving your old self behind.</p>
+ 
+    <div id="rocket-wrap" class="reveal">
+      <svg id="rocket" width="90" height="185" viewBox="0 0 90 185" fill="none">
+        <defs>
+          <linearGradient id="rbg" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#a8a49a"/><stop offset="50%" stop-color="#dcd4c4"/><stop offset="100%" stop-color="#888880"/>
+          </linearGradient>
+          <linearGradient id="exg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#f0a500" stop-opacity=".95"/>
+            <stop offset="60%" stop-color="#e8621a" stop-opacity=".5"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </linearGradient>
+        </defs>
+        <path d="M45 8 C30 32 26 82 26 116 L64 116 C64 82 60 32 45 8Z" fill="url(#rbg)"/>
+        <ellipse cx="45" cy="8" rx="8" ry="5" fill="#e8e0d0"/>
+        <circle cx="45" cy="74" r="10" fill="rgba(232,224,208,.07)" stroke="rgba(232,224,208,.22)" stroke-width="1"/>
+        <circle cx="45" cy="74" r="5" fill="rgba(193,68,14,.15)" stroke="rgba(193,68,14,.35)" stroke-width=".8"/>
+        <path d="M26 116 L5 153 L26 140Z" fill="#908880"/>
+        <path d="M64 116 L85 153 L64 140Z" fill="#908880"/>
+        <path d="M31 140 Q45 148 59 140 L56 116 L34 116Z" fill="#201e18"/>
+        <rect x="26" y="100" width="38" height="2.5" fill="rgba(193,68,14,.5)"/>
+        <g id="exhaust">
+          <path d="M34 148 Q45 205 56 148" fill="url(#exg)" opacity="0" id="ex-flame"/>
+          <ellipse cx="45" cy="150" rx="18" ry="7" fill="rgba(240,165,0,.22)" opacity="0" id="ex-glow"/>
+        </g>
+      </svg>
+    </div>
+ 
+    <div class="reveal" style="margin-top:1.5rem">
+      <button class="cta-btn" id="launch-btn"><span id="launch-lbl">LAUNCH</span></button>
+      <div id="launch-hint">click to leave everything behind</div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ═══════════════════════════════════════
+     ACT 2 — SPACE
+════════════════════════════════════════ -->
+<section class="act" id="act2">
+  <div id="warp-wrap"></div>
+  <div class="sweep-line"></div>
+  <div class="act-inner">
+    <div class="act-tag reveal">Act II · Orbital Isolation Phase</div>
+    <h2 class="act-h reveal">Silence<br>Changes You</h2>
+    <p class="act-q reveal">"Out here… there is no noise.<br>Only you."</p>
+    <div class="hr-reveal reveal"></div>
+ 
+    <div class="box reveal">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.8rem">
+        <span style="font-family:var(--fm);font-size:.58rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase">distance from everything you love</span>
+        <span id="dist-km">78M km</span>
+      </div>
+      <div id="dist-track">
+        <div id="dist-fill" style="width:0%"></div>
+        <div id="d-earth"></div><div id="d-mars"></div>
+        <div id="d-ship" style="left:5%"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-family:var(--fm);font-size:.52rem;color:rgba(122,112,96,.5)">
+        <span>🌍 Earth</span><span id="sig-delay">⚡ 4min delay</span><span>🔴 Mars</span>
+      </div>
+      <div style="font-family:'Crimson Pro',serif;font-style:italic;font-size:.88rem;color:rgba(212,145,106,.55);margin-top:1rem;text-align:center;border-top:1px solid rgba(255,255,255,.04);padding-top:.8rem">"Out here, silence isn't the absence of sound — it's the presence of everything you left behind."</div>
+    </div>
+ 
+    <div class="reveal">
+      <div id="breathe-ring"><div id="breathe-core"></div></div>
+      <div id="breathe-lbl">INHALE</div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ═══════════════════════════════════════
+     ACT 3 — MARS APPROACH
+════════════════════════════════════════ -->
+<section class="act" id="act3">
+  <canvas id="heat-canvas"></canvas>
+  <div class="sweep-line"></div>
+  <div class="act-inner">
+    <div class="act-tag reveal">Act III · Approach</div>
+    <h2 class="act-h glitch reveal" data-text="IT FEELS ALIVE">It Feels<br>Alive</h2>
+    <p class="act-q reveal">"Mars isn't empty…<br>it's waiting."</p>
+ 
+    <div class="reveal" style="position:relative;display:inline-block;margin:1rem auto">
+      <div id="orbit-ring" style="width:340px;height:340px;position:absolute;top:50%;left:50%">
+        <div id="orbit-dot"></div>
+      </div>
+      <div id="mars-globe">
+        <div class="m-band" style="top:28%;height:16%"></div>
+        <div class="m-band" style="top:52%;height:10%"></div>
+        <div class="m-crater" style="width:14%;height:11%;top:26%;left:22%"></div>
+        <div class="m-crater" style="width:7%;height:5%;top:56%;left:62%"></div>
+      </div>
+      <div id="watch-hint">move cursor over mars — it watches back</div>
+    </div>
+ 
+    <div class="data-grid reveal">
+      <div class="d-card"><div class="d-val">−63°C</div><div class="d-lbl">surface temp</div></div>
+      <div class="d-card"><div class="d-val">0.38g</div><div class="d-lbl">gravity</div></div>
+      <div class="d-card"><div class="d-val">1.88yr</div><div class="d-lbl">martian year</div></div>
+      <div class="d-card"><div class="d-val">0.6%</div><div class="d-lbl">atmosphere</div></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ═══════════════════════════════════════
+     ACT 4 — LANDING
+════════════════════════════════════════ -->
+<section class="act" id="act4">
+  <div class="sweep-line"></div>
+  <div class="act-inner">
+    <div class="act-tag reveal">Act IV · Seven Minutes of Terror</div>
+    <h2 class="act-h glitch reveal" data-text="REALITY BREAKS" style="font-size:clamp(3rem,8vw,6rem)">Reality<br>Breaks</h2>
+ 
+    <div id="land-display" class="reveal">ENTERING ATMOSPHERE</div>
+    <div id="land-sub" class="reveal">heat shield active · 19,000 km/h · 12 min from any help</div>
+ 
+    <div id="systems" class="reveal">
+      <div class="sys-row"><div class="sys-dot crit" id="d0"></div><span>HEAT SHIELD</span><span class="sys-val" id="v0" style="color:#ff3333">CRITICAL</span></div>
+      <div class="sys-row"><div class="sys-dot crit" id="d1"></div><span>COMM RELAY</span><span class="sys-val" id="v1" style="color:#ff3333">CRITICAL</span></div>
+      <div class="sys-row"><div class="sys-dot crit" id="d2"></div><span>GYROSCOPE</span><span class="sys-val" id="v2" style="color:#ff3333">CRITICAL</span></div>
+      <div class="sys-row"><div class="sys-dot crit" id="d3"></div><span>THRUSTERS</span><span class="sys-val" id="v3" style="color:#ff3333">CRITICAL</span></div>
+      <div class="sys-row"><div class="sys-dot warn" id="d4"></div><span>TOUCHDOWN</span><span class="sys-val" id="v4" style="color:var(--amber)">STANDBY</span></div>
+    </div>
+ 
+    <div class="reveal" id="stab-wrap">
+      <button class="cta-btn amber-btn" id="stab-btn"><span id="stab-lbl">STABILIZE</span></button>
+      <div id="stab-hint" style="font-family:var(--fm);font-size:.58rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-top:.6rem;animation:blink 2.5s infinite">click to survive the landing</div>
+    </div>
+    <div id="touch-msg" style="display:none;opacity:0;transition:opacity 1.5s;margin-top:1rem">
+      <p class="act-q" style="opacity:1">"You survived…<br>but something changed."</p>
+    </div>
+  </div>
+</section>
+ 
+<!-- ═══════════════════════════════════════
+     ACT 5 — EXPLORATION
+════════════════════════════════════════ -->
+<section class="act" id="act5">
+  <div class="sweep-line"></div>
+  <div class="act-inner">
+    <div class="act-tag reveal">Act V · Surface Operations</div>
+    <h2 class="act-h reveal" style="font-size:clamp(3rem,8vw,6rem)">A New World,<br>A New You</h2>
+    <p class="act-q reveal">"Mars is reshaping you."</p>
+ 
+    <div id="surface-map" class="reveal">
+      <svg width="100%" height="100%" viewBox="0 0 900 200" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="sk5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0e0402"/><stop offset="55%" stop-color="#5a1a04"/><stop offset="100%" stop-color="#a83a0c"/></linearGradient>
+          <linearGradient id="gn5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b3a1a"/><stop offset="100%" stop-color="#3a1206"/></linearGradient>
+        </defs>
+        <rect width="900" height="200" fill="url(#sk5)"/>
+        <path d="M0 150 L70 100 L140 130 L220 78 L300 118 L390 84 L470 108 L550 70 L630 105 L710 80 L790 112 L900 92 L900 200 L0 200Z" fill="rgba(100,28,6,.72)"/>
+        <path d="M0 178 L90 136 L180 158 L270 124 L380 150 L490 128 L600 152 L710 130 L820 152 L900 135 L900 200 L0 200Z" fill="url(#gn5)"/>
+        <ellipse cx="100" cy="193" rx="45" ry="14" fill="#2e1006"/>
+        <ellipse cx="530" cy="196" rx="36" ry="12" fill="#261004"/>
+        <ellipse cx="780" cy="194" rx="56" ry="16" fill="#2e1006"/>
+      </svg>
+      <div class="hs" id="hs-crater" style="left:18%;top:52%">
+        <div class="hs-ring" style="border-color:rgba(232,98,26,.6);background:rgba(232,98,26,.12)">💥</div>
+        <div class="hs-lbl" style="color:#e8621a">Crater</div>
+      </div>
+      <div class="hs" id="hs-ice" style="left:50%;top:40%">
+        <div class="hs-ring" style="border-color:rgba(79,163,224,.6);background:rgba(79,163,224,.12)">❄️</div>
+        <div class="hs-lbl" style="color:#4fa3e0">Ice Caps</div>
+      </div>
+      <div class="hs" id="hs-volcano" style="left:82%;top:46%">
+        <div class="hs-ring" style="border-color:rgba(240,165,0,.6);background:rgba(240,165,0,.12)">🌋</div>
+        <div class="hs-lbl" style="color:#f0a500">Olympus Mons</div>
+      </div>
+    </div>
+ 
+    <div id="disc-box" class="reveal">
+      <div id="disc-hint">↑ click the hotspots to discover Mars</div>
+      <div id="disc-title"></div>
+      <div id="disc-text"></div>
+    </div>
+ 
+    <div class="explore-grid reveal">
+      <div class="ex-card"><div class="ex-icon">🧬</div><div class="ex-title">Life Detection</div><div class="ex-body">Ancient microbial signatures. 3m below surface. We were never alone.</div></div>
+      <div class="ex-card"><div class="ex-icon">⛏️</div><div class="ex-title">ISRU Mining</div><div class="ex-body">Water ice extracted. Oxygen from CO₂. Mars teaches us to stay.</div></div>
+      <div class="ex-card"><div class="ex-icon">📡</div><div class="ex-title">Earth Contact</div><div class="ex-body">12 minutes delay. By the time they respond, you've moved on.</div></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ═══════════════════════════════════════
+     ACT 6 — TRANSFORMATION
+════════════════════════════════════════ -->
+<section class="act" id="act6">
+  <div class="sweep-line"></div>
+  <div class="act-inner">
+    <div class="act-tag reveal">Act VI · Identity</div>
+    <div id="finale-title" class="glitch reveal" data-text="YOU DON'T BELONG TO EARTH ANYMORE.">You Don't<br>Belong to<br>Earth Anymore.</div>
+ 
+    <div id="planet-row" class="reveal">
+      <div><span class="p-emoji" id="e-earth">🌍</span><div class="p-lbl" style="color:var(--muted)">HOME</div></div>
+      <div style="font-family:var(--fm);font-size:.9rem;color:var(--muted)">→</div>
+      <div><span class="p-emoji" id="e-mars" style="opacity:.06;filter:grayscale(1)">🔴</span><div class="p-lbl" style="color:var(--ember)">HOME NOW</div></div>
+    </div>
+ 
+    <div id="id-bars" class="reveal">
+      <div class="id-row">
+        <div class="id-lbl">HUMAN</div>
+        <div class="id-track"><div class="id-bar" id="bar-h" style="background:#4fa3e0;width:100%"></div></div>
+        <div class="id-val" id="val-h" style="color:#4fa3e0">100%</div>
+      </div>
+      <div class="id-row">
+        <div class="id-lbl">MARTIAN</div>
+        <div class="id-track"><div class="id-bar" id="bar-m" style="background:#e8621a;width:0%"></div></div>
+        <div class="id-val" id="val-m" style="color:#e8621a">0%</div>
+      </div>
+    </div>
+ 
+    <div id="letter-box" class="reveal">
+      <div id="letter-from">From: Commander R. Silva · Day 212 · 225,000,000 km from home</div>
+      <div id="letter-text"><span id="letter-cursor"></span></div>
+      <div id="letter-sign">R. Silva</div>
+    </div>
+ 
+    <div id="final-quote" class="reveal">
+      <div id="q1">"You came to explore Mars…</div>
+      <div id="q2">but Mars explored you."</div>
+    </div>
+  </div>
+</section>
+ 
+<footer>
+  <div class="ft-logo">MARS</div>
+  <p class="ft-sub">MISSION Ω · 6 ACTS · DEPARTURE 2026 · YOU CHANGED</p>
+</footer>
+ 
+<script src="js/audio.js"></script>
+<script src="js/interactions.js"></script>
+<script src="js/scroll.js"></script>
+<script src="js/cinematic.js"></script>
+</body>
+</html>
