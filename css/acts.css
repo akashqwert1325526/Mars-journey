@@ -726,3 +726,13 @@
   color: var(--dust);
   min-height: 1.2rem;
 }
+
+.scroll-tip {
+  margin-top: .7rem;
+  font-family: var(--fm);
+  font-size: .56rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: .9;
+}
