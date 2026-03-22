@@ -422,3 +422,18 @@ body.mission-locked { overflow: hidden; }
   #mission-hud { left: 1rem; right: 1rem; top: auto; bottom: 5.5rem; width: auto; }
 }
 
+
+#mi-instructions {
+  margin-top: .95rem;
+  display: grid;
+  gap: .38rem;
+}
+
+#mi-instructions span {
+  display: block;
+  font-family: var(--fm);
+  font-size: .56rem;
+  letter-spacing: .08em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
