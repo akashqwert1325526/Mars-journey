@@ -730,9 +730,11 @@
 .scroll-tip {
   margin-top: .7rem;
   font-family: var(--fm);
-  font-size: .56rem;
-  letter-spacing: .16em;
+  font-size: .6rem;
+  letter-spacing: .18em;
   text-transform: uppercase;
-  color: var(--muted);
-  opacity: .9;
+  color: var(--ember);
+  opacity: 1;
+  animation: blink 2.2s infinite;
 }
+
