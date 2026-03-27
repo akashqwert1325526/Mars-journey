@@ -5,6 +5,8 @@ let audioCtx = null;
 let masterGain = null;
 let ambientOscs = [];
 let hbInterval = null;
+let dangerLayer = null;
+let musicIntensity = 1;
 
 const sndBtn = document.getElementById('snd-btn');
 const sndViz = document.getElementById('snd-viz');
@@ -63,6 +65,16 @@ function stopAll() {
     } catch (e) {}
   });
   ambientOscs = [];
+  stopDangerLayer();
+}
+
+function applyMasterIntensityRamp(sec = 0.18) {
+  if (!audioCtx || !masterGain) return;
+  const t = audioCtx.currentTime;
+  const target = Math.max(0.35, Math.min(1.1, 0.7 * musicIntensity));
+  masterGain.gain.cancelScheduledValues(t);
+  masterGain.gain.setValueAtTime(masterGain.gain.value, t);
+  masterGain.gain.linearRampToValueAtTime(target, t + sec);
 }
 
 function playHeartbeat(bpm = 64) {
@@ -219,6 +231,99 @@ function playTransformation() {
   });
 }
 
+function playUIClick() {
+  if (!audioCtx || !masterGain) return;
+  const t = audioCtx.currentTime;
+  const o = audioCtx.createOscillator();
+  const g = audioCtx.createGain();
+  o.type = 'triangle';
+  o.frequency.setValueAtTime(620, t);
+  o.frequency.exponentialRampToValueAtTime(420, t + 0.06);
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(0.08, t + 0.01);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.09);
+  o.connect(g);
+  g.connect(masterGain);
+  o.start(t);
+  o.stop(t + 0.11);
+}
+
+function startDangerLayer() {
+  if (!audioCtx || !masterGain || dangerLayer) return;
+  const t = audioCtx.currentTime;
+  const base = audioCtx.createOscillator();
+  const sub = audioCtx.createOscillator();
+  const lfo = audioCtx.createOscillator();
+  const lfoGain = audioCtx.createGain();
+  const mix = audioCtx.createGain();
+  const filt = audioCtx.createBiquadFilter();
+
+  base.type = 'sawtooth';
+  sub.type = 'triangle';
+  lfo.type = 'sine';
+  base.frequency.setValueAtTime(72, t);
+  sub.frequency.setValueAtTime(36, t);
+  lfo.frequency.setValueAtTime(3.2, t);
+
+  lfoGain.gain.setValueAtTime(0.03, t);
+  mix.gain.setValueAtTime(0.0001, t);
+  mix.gain.linearRampToValueAtTime(0.12, t + 0.35);
+  filt.type = 'lowpass';
+  filt.frequency.setValueAtTime(720, t);
+  filt.Q.value = 0.8;
+
+  lfo.connect(lfoGain);
+  lfoGain.connect(mix.gain);
+  base.connect(mix);
+  sub.connect(mix);
+  mix.connect(filt);
+  filt.connect(masterGain);
+
+  base.start(t);
+  sub.start(t);
+  lfo.start(t);
+  dangerLayer = { base, sub, lfo, mix };
+}
+
+function stopDangerLayer() {
+  if (!audioCtx || !dangerLayer) return;
+  const t = audioCtx.currentTime;
+  dangerLayer.mix.gain.cancelScheduledValues(t);
+  dangerLayer.mix.gain.setValueAtTime(dangerLayer.mix.gain.value, t);
+  dangerLayer.mix.gain.linearRampToValueAtTime(0.0001, t + 0.28);
+  setTimeout(() => {
+    if (!dangerLayer) return;
+    try { dangerLayer.base.stop(); } catch (e) {}
+    try { dangerLayer.sub.stop(); } catch (e) {}
+    try { dangerLayer.lfo.stop(); } catch (e) {}
+    dangerLayer = null;
+  }, 320);
+}
+
+function setMusicIntensity(level = 1) {
+  musicIntensity = Math.max(0.65, Math.min(1.35, Number(level) || 1));
+  applyMasterIntensityRamp(0.25);
+}
+
+function playVictorySting() {
+  if (!audioCtx || !masterGain) return;
+  const t = audioCtx.currentTime;
+  const notes = [392, 494, 587, 784];
+  notes.forEach((f, i) => {
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.type = 'triangle';
+    o.frequency.setValueAtTime(f, t + i * 0.02);
+    g.gain.setValueAtTime(0.0001, t + i * 0.02);
+    g.gain.exponentialRampToValueAtTime(0.11, t + i * 0.02 + 0.03);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + i * 0.02 + 0.42);
+    o.connect(g);
+    g.connect(masterGain);
+    o.start(t + i * 0.02);
+    o.stop(t + i * 0.02 + 0.45);
+  });
+}
+
 function crossfadeTo(fn) {
   if (!audioCtx || !masterGain) {
     fn();
@@ -259,6 +364,7 @@ function turnSoundOnForCurrentAct() {
   ];
   const act = window.getCurrentAct ? window.getCurrentAct() : 0;
   if (fns[act]) crossfadeTo(fns[act]);
+  applyMasterIntensityRamp(0.4);
 }
 
 const MarsAudio = {
@@ -270,6 +376,11 @@ const MarsAudio = {
   playLaunchRumble,
   playImpact,
   playTransformation,
+  playUIClick,
+  startDangerLayer,
+  stopDangerLayer,
+  setMusicIntensity,
+  playVictorySting,
   turnSoundOnForCurrentAct,
   turnSoundOff,
 };

@@ -86,8 +86,10 @@
   <div id="mi-card">
     <div id="mi-kicker">Mission Omega</div>
     <h2 id="mi-title">Mars Survival Simulation</h2>
-    
-        <button id="start-mission-btn">Start Mission</button>
+    <div id="mi-actions">
+      <button id="start-mission-btn">Start Mission</button>
+      <button id="demo-mode-btn" class="ghost-btn">Demo Mode (90s)</button>
+    </div>
     <div id="mi-instructions">
       <span>Scroll down to move through the mission story (keep scrolling)</span>
     </div>
@@ -99,6 +101,7 @@
   <div class="mh-row"><span>STAGE</span><strong id="mh-stage-name">Launch</strong><span id="mh-stage-index">1/6</span></div>
   <div id="mh-stage-track"><div id="mh-stage-fill" style="width:16.6%"></div></div>
   <div class="mh-row"><span>OXYGEN</span><strong id="mh-oxy">100%</strong><span id="mh-status">Nominal</span></div>
+  <div class="mh-row"><span>SCORE</span><strong id="mh-score">50</strong><span id="mh-rank">Cadet</span></div>
 </div>
  
 <!-- ═══════════════════════════════════════
@@ -110,8 +113,8 @@
   <div class="frame-corner tl"></div><div class="frame-corner tr"></div>
   <div class="frame-corner bl"></div><div class="frame-corner br"></div>
   <div class="act-inner">
-    <div class="act-tag reveal">Act I · The Departure</div>
-    <h1 class="act-h grad-title glitch reveal" data-text="LEAVING">LEAVING<br>
+    <div class="act-tag reveal-blur">Act I · The Departure</div>
+    <h1 class="act-h grad-title glitch reveal-blur" data-text="LEAVING">LEAVING<br>
       <span style="font-size:.38em;font-family:'Crimson Pro',serif;font-style:italic;-webkit-text-fill-color:var(--dust);color:var(--dust);letter-spacing:.05em">&nbsp;&nbsp;who you were</span>
     </h1>
     <p class="act-q reveal">"This is not just a mission…<br>it's a departure."</p>
@@ -159,8 +162,8 @@
   <div id="warp-wrap"></div>
   <div class="sweep-line"></div>
   <div class="act-inner">
-    <div class="act-tag reveal">Act II · Orbital Isolation Phase</div>
-    <h2 class="act-h reveal">Silence<br>Changes You</h2>
+    <div class="act-tag reveal-blur">Act II · Orbital Isolation Phase</div>
+    <h2 class="act-h reveal-blur">Silence<br>Changes You</h2>
     <p class="act-q reveal">"Out here… there is no noise.<br>Only you."</p>
     <div class="hr-reveal reveal"></div>
  
@@ -180,10 +183,6 @@
       <div style="font-family:'Crimson Pro',serif;font-style:italic;font-size:.88rem;color:rgba(212,145,106,.55);margin-top:1rem;text-align:center;border-top:1px solid rgba(255,255,255,.04);padding-top:.8rem">"Out here, silence isn't the absence of sound — it's the presence of everything you left behind."</div>
     </div>
  
-    <div class="reveal">
-      <div id="breathe-ring"><div id="breathe-core"></div></div>
-      <div id="breathe-lbl">INHALE</div>
-    </div>
     <div class="scroll-tip">Scroll down to continue toward Mars approach.</div>
   </div>
 </section>
@@ -195,8 +194,8 @@
   <canvas id="heat-canvas"></canvas>
   <div class="sweep-line"></div>
   <div class="act-inner">
-    <div class="act-tag reveal">Act III · Approach</div>
-    <h2 class="act-h glitch reveal" data-text="IT FEELS ALIVE">It Feels<br>Alive</h2>
+    <div class="act-tag reveal-blur">Act III · Approach</div>
+    <h2 class="act-h glitch reveal-blur" data-text="IT FEELS ALIVE">It Feels<br>Alive</h2>
     <p class="act-q reveal">"Mars isn't empty…<br>it's waiting."</p>
  
     <div class="reveal" style="position:relative;display:inline-block;margin:1rem auto">
@@ -228,8 +227,8 @@
 <section class="act" id="act4">
   <div class="sweep-line"></div>
   <div class="act-inner">
-    <div class="act-tag reveal">Act IV · Seven Minutes of Terror</div>
-    <h2 class="act-h glitch reveal" data-text="REALITY BREAKS" style="font-size:clamp(3rem,8vw,6rem)">Reality<br>Breaks</h2>
+    <div class="act-tag reveal-blur">Act IV · Seven Minutes of Terror</div>
+    <h2 class="act-h glitch reveal-blur" data-text="REALITY BREAKS" style="font-size:clamp(3rem,8vw,6rem)">Reality<br>Breaks</h2>
  
     <div id="land-display" class="reveal">ENTERING ATMOSPHERE</div>
     <div id="land-sub" class="reveal">heat shield active · 19,000 km/h · 12 min from any help</div>
@@ -244,6 +243,19 @@
       <div class="sys-row"><div class="sys-dot crit" id="d2"></div><span>GYROSCOPE</span><span class="sys-val" id="v2" style="color:#ff3333">CRITICAL</span></div>
       <div class="sys-row"><div class="sys-dot crit" id="d3"></div><span>THRUSTERS</span><span class="sys-val" id="v3" style="color:#ff3333">CRITICAL</span></div>
       <div class="sys-row"><div class="sys-dot warn" id="d4"></div><span>TOUCHDOWN</span><span class="sys-val" id="v4" style="color:var(--amber)">STANDBY</span></div>
+    </div>
+
+    <div id="meteor-defense" class="reveal">
+      <div class="md-head">
+        <span>Emergency Meteor Defense</span>
+        <span id="md-status">Ready</span>
+      </div>
+      <div id="meteor-field"></div>
+      <div class="md-row">
+        <span id="md-score">Intercepted 0</span>
+        <span id="md-hits">Hull Hits 0</span>
+      </div>
+      <button class="cta-btn" id="start-defense-btn"><span>START DEFENSE</span></button>
     </div>
  
     <div class="reveal" id="stab-wrap">
@@ -263,8 +275,8 @@
 <section class="act" id="act5">
   <div class="sweep-line"></div>
   <div class="act-inner">
-    <div class="act-tag reveal">Act V · Surface Operations</div>
-    <h2 class="act-h reveal" style="font-size:clamp(3rem,8vw,6rem)">A New World,<br>A New You</h2>
+    <div class="act-tag reveal-blur">Act V · Surface Operations</div>
+    <h2 class="act-h reveal-blur" style="font-size:clamp(3rem,8vw,6rem)">A New World,<br>A New You</h2>
     <p class="act-q reveal">"Mars is reshaping you."</p>
  
     <div id="surface-map" class="reveal">
@@ -324,8 +336,8 @@
 <section class="act" id="act6">
   <div class="sweep-line"></div>
   <div class="act-inner">
-    <div class="act-tag reveal">Act VI · Identity</div>
-    <div id="finale-title" class="glitch reveal" data-text="YOU DON'T BELONG TO EARTH ANYMORE.">You Don't<br>Belong to<br>Earth Anymore.</div>
+    <div class="act-tag reveal-blur">Act VI · Identity</div>
+    <div id="finale-title" class="glitch reveal-blur" data-text="YOU DON'T BELONG TO EARTH ANYMORE.">You Don't<br>Belong to<br>Earth Anymore.</div>
  
     <div id="planet-row" class="reveal">
       <div><span class="p-emoji" id="e-earth">🌍</span><div class="p-lbl" style="color:var(--muted)">HOME</div></div>
@@ -355,6 +367,30 @@
     <div id="final-quote" class="reveal">
       <div id="q1">"You came to explore Mars…</div>
       <div id="q2">but Mars explored you."</div>
+    </div>
+    <div id="ending-card" class="reveal">
+      <div id="ending-kicker">Mission Outcome</div>
+      <div id="ending-title">Awaiting Final Evaluation</div>
+      <div id="ending-summary">Your choices across all six acts will define what kind of Martian you became.</div>
+      <div id="ending-stats"></div>
+      <div id="report-actions">
+        <button id="download-report-btn" class="ghost-btn">Download Mission Report</button>
+      </div>
+    </div>
+    <div id="tech-panel" class="reveal">
+      <div id="tech-kicker">How It Works</div>
+      <div class="tech-item">
+        <span class="tech-label">State Engine</span>
+        <span class="tech-copy">Tracks oxygen, stage progress, and score in real time.</span>
+      </div>
+      <div class="tech-item">
+        <span class="tech-label">Branching Logic</span>
+        <span class="tech-copy">Your landing success, science scans, and survival choice determine the ending profile.</span>
+      </div>
+      <div class="tech-item">
+        <span class="tech-label">Performance Strategy</span>
+        <span class="tech-copy">Lightweight DOM updates, lazy triggers on scroll, and a guided 90s demo path for judges.</span>
+      </div>
     </div>
     <div class="scroll-tip">Scroll down to complete the mission log.</div>
   </div>

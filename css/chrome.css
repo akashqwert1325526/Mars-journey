@@ -323,6 +323,16 @@ footer {
   nav { padding: 1rem 1.5rem; }
   .act { padding: 6rem 1.2rem 4rem; }
 }
+
+/* Cursor safety override: keep default pointer behavior for reliable clicking */
+html, body, button, a, .hs, .choice-btn, .cta-btn, .s-dot {
+  cursor: auto !important;
+}
+
+#cur,
+#cur-ring {
+  display: none !important;
+}
 /* MISSION INTRO + HUD */
 body.mission-locked { overflow: hidden; }
 
@@ -362,9 +372,16 @@ body.mission-locked { overflow: hidden; }
   color: var(--cream);
 }
 
+#mi-actions {
+  margin-top: 1.2rem;
+  display: flex;
+  justify-content: center;
+  gap: .7rem;
+  flex-wrap: wrap;
+}
+
 
 #start-mission-btn {
-  margin-top: 1.2rem;
   border: 1px solid var(--ember);
   background: transparent;
   color: var(--ember);
@@ -374,6 +391,23 @@ body.mission-locked { overflow: hidden; }
   text-transform: uppercase;
   letter-spacing: .22em;
   cursor: none;
+}
+
+.ghost-btn {
+  border: 1px solid rgba(79,163,224,.6);
+  background: rgba(79,163,224,.08);
+  color: #9acbf2;
+  padding: .8rem 1.1rem;
+  font-family: var(--fm);
+  font-size: .62rem;
+  text-transform: uppercase;
+  letter-spacing: .17em;
+  cursor: none;
+}
+
+.ghost-btn:hover {
+  border-color: #9acbf2;
+  background: rgba(79,163,224,.16);
 }
 
 #mission-hud {
@@ -402,6 +436,10 @@ body.mission-locked { overflow: hidden; }
 .mh-row strong {
   color: var(--cream);
   letter-spacing: .12em;
+}
+
+#mh-rank {
+  color: var(--ember);
 }
 
 #mh-stage-track {

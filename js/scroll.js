@@ -59,6 +59,12 @@ function onScroll() {
   document.getElementById('red-wash').style.background = `rgba(160,8,0,${mr * 0.45})`;
   document.getElementById('scanlines').style.opacity = String(mr * 0.45);
 
+  /* Parallax */
+  const rocket = document.getElementById('rocket');
+  if (rocket && pct < 0.3) {
+    rocket.style.transform = `translateY(${sy * 0.45}px) rotate(-5deg)`;
+  }
+
   /* Active act detection */
   let newAct = 0;
   actEls.forEach((el, i) => {
@@ -93,12 +99,13 @@ function onScroll() {
 
     /* Act-specific side effects */
     if (newAct === 1) window.startDistIfNeeded();
+    if (newAct === 2 && window.startAct3CountersIfNeeded) window.startAct3CountersIfNeeded();
     if (newAct === 3 && window.startLandingCountdownIfNeeded) window.startLandingCountdownIfNeeded();
     if (newAct === 5) window.runFinaleIfNeeded();
   }
 
   /* Reveal on scroll */
-  document.querySelectorAll('.reveal, .reveal-l, .reveal-r').forEach((el) => {
+  document.querySelectorAll('.reveal, .reveal-blur, .reveal-l, .reveal-r').forEach((el) => {
     const r = el.getBoundingClientRect();
     if (r.top < innerHeight * 0.9) el.classList.add('visible');
   });
